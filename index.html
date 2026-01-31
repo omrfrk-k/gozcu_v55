@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>GÖZCÜ PANEL | BAFRA 55</title>
+    <style>
+        body { background: #0a0a0a; color: #00ff00; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 20px; }
+        .monitor { border: 2px solid #00ff00; border-radius: 15px; overflow: hidden; max-width: 500px; margin: auto; background: #000; box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); }
+        .stream { width: 100%; display: block; min-height: 250px; background: #111; }
+        .baslik { font-size: 24px; font-weight: bold; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        .btn-panel { margin-top: 25px; }
+        .btn { background: transparent; border: 2px solid #00ff00; color: #00ff00; padding: 15px 20px; border-radius: 10px; font-weight: bold; width: 85%; margin: 8px; font-size: 16px; transition: 0.3s; }
+        .btn:active { background: #00ff00; color: #000; }
+        .alt-not { font-size: 11px; color: #444; margin-top: 30px; letter-spacing: 1px; }
+        .durum-isigi { display: inline-block; width: 10px; height: 10px; background: #00ff00; border-radius: 50%; margin-right: 5px; box-shadow: 0 0 5px #00ff00; }
+    </style>
+</head>
+<body>
+    <div class="baslik">KAHRAMAN SAVUNMA V55</div>
+    
+    <div class="monitor">
+        <img src="http://PAZARTESI_ALACAGIMIZ_IP:81/stream" class="stream" id="kamera_yayini" alt="Yayın Bekleniyor...">
+    </div>
+    
+    <div class="btn-panel">
+        <button class="btn" onclick="location.reload()">GÖRÜNTÜYÜ TAZELE</button>
+        <button class="btn" onclick="alert('Dükkan Kapısı Güvende!')">GÜVENLİK KONTROLÜ</button>
+    </div>
+
+    <div class="alt-not">
+        <span class="durum-isigi"></span> BAFRA - İZMİT ENERJİ HATTI | RIFKI SİSTEM
+    </div>
+
+    <script>
+        window.onload = function() {
+            console.log("Gözcü V55 Sistemi Hazır, İzmit Hattı Beklemede!");
+        };
+    </script>
+</body>
+</html>
