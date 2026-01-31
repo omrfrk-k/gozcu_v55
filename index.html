@@ -7,7 +7,7 @@
     <title>KAHRAMAN TARIM</title>
     <style>
         :root { --ana-renk: #00ff00; --arka-plan: #0a0a0a; --panel-renk: #1a1a1a; }
-        body { background: var(--arka-plan); color: var(--ana-renk); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+        body { background: var(--arka-plan); color: var(--ana-renk); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
 
         /* ÜST BAR */
         .top-bar { background: var(--panel-renk); padding: 12px; display: flex; align-items: center; border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 100; }
@@ -19,26 +19,54 @@
         .sidebar.active { left: 0; }
         .sidebar-item { padding: 15px; border-bottom: 1px solid #222; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 10px; }
 
-        /* ANALOG SAAT */
-        .welcome-container { text-align: center; margin-top: 5vh; padding: 20px; }
-        .welcome-title { color: #fff; font-size: 22px; font-weight: 900; margin-bottom: 25px; text-shadow: 0 0 10px rgba(0,255,0,0.2); }
+        /* YENİLENMİŞ BAŞLIK STİLİ (BURASI DEĞİŞTİ) */
+        .welcome-container { text-align: center; margin-top: 4vh; padding: 20px; }
         
-        .clock-container { position: relative; width: 180px; height: 180px; border: 4px solid var(--ana-renk); border-radius: 50%; margin: 0 auto; background: #111; box-shadow: 0 0 20px rgba(0,255,0,0.1); }
-        .clock-center { position: absolute; top: 50%; left: 50%; width: 12px; height: 12px; background: var(--ana-renk); border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; }
-        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; border-radius: 5px; }
-        .hour-hand { width: 6px; height: 45px; background: #fff; transform: translateX(-50%); }
-        .min-hand { width: 4px; height: 65px; background: var(--ana-renk); transform: translateX(-50%); }
-        .sec-hand { width: 2px; height: 75px; background: #ff4444; transform: translateX(-50%); }
+        .brand-box { margin-bottom: 30px; }
+        .welcome-title { 
+            color: #ffffff; 
+            font-size: 32px; 
+            font-weight: 900; 
+            letter-spacing: -1px; 
+            text-transform: uppercase;
+            margin: 0;
+            padding: 0;
+            line-height: 1;
+            text-shadow: 0 0 15px rgba(0, 255, 0, 0.4), 0 0 30px rgba(0, 255, 0, 0.2);
+            font-family: 'Arial Black', Gadget, sans-serif;
+        }
+        .brand-divider {
+            height: 3px;
+            width: 60px;
+            background: var(--ana-renk);
+            margin: 15px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--ana-renk);
+        }
+        .welcome-sub { 
+            color: var(--ana-renk); 
+            font-size: 11px; 
+            letter-spacing: 5px; 
+            font-weight: bold;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
 
-        /* TAKVİM TASARIMI */
-        .calendar-box { margin: 25px auto; background: #111; border: 1px solid #333; border-radius: 15px; width: 260px; padding: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.4); }
+        /* ANALOG SAAT VE TAKVİM (AYNI KALDI) */
+        .clock-container { position: relative; width: 170px; height: 170px; border: 4px solid var(--ana-renk); border-radius: 50%; margin: 0 auto; background: #111; box-shadow: 0 0 20px rgba(0,255,0,0.1); }
+        .clock-center { position: absolute; top: 50%; left: 50%; width: 10px; height: 10px; background: var(--ana-renk); border-radius: 50%; transform: translate(-50%, -50%); z-index: 10; }
+        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; border-radius: 5px; }
+        .hour-hand { width: 6px; height: 40px; background: #fff; transform: translateX(-50%); }
+        .min-hand { width: 4px; height: 60px; background: var(--ana-renk); transform: translateX(-50%); }
+        .sec-hand { width: 2px; height: 70px; background: #ff4444; transform: translateX(-50%); }
+
+        .calendar-box { margin: 25px auto; background: #111; border: 1px solid #333; border-radius: 15px; width: 260px; padding: 15px; }
         .calendar-header { color: #fff; font-weight: bold; margin-bottom: 10px; font-size: 16px; border-bottom: 1px solid #222; padding-bottom: 5px; }
         .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center; font-size: 12px; }
-        .day-name { color: var(--ana-renk); font-weight: bold; margin-bottom: 5px; }
-        .day-num { padding: 5px; color: #888; border-radius: 5px; }
-        .day-num.today { background: var(--ana-renk); color: #000; font-weight: bold; }
+        .day-name { color: var(--ana-renk); font-weight: bold; }
+        .day-num { padding: 5px; color: #888; }
+        .day-num.today { background: var(--ana-renk); color: #000; font-weight: bold; border-radius: 5px; }
 
-        /* DİĞER BÖLÜMLER */
         .content-section { display: none; padding: 10px; flex-direction: column; align-items: center; }
         .content-section.active { display: flex; }
 
@@ -53,7 +81,7 @@
 
     <div id="giris-ekrani">
         <div class="login-box">
-            <h3 style="color: var(--ana-renk); margin-bottom: 20px;">GÖZCÜ V95</h3>
+            <h3 style="color: var(--ana-renk); margin-bottom: 20px;">GÖZCÜ V100</h3>
             <input type="text" id="userInput" placeholder="Kullanıcı Adı">
             <input type="password" id="passInput" placeholder="Şifre">
             <button class="btn-aksiyon" onclick="login()">GİRİŞ YAP</button>
@@ -75,7 +103,11 @@
 
         <div id="welcome" class="content-section active">
             <div class="welcome-container">
-                <div class="welcome-title">KAHRAMAN TARIM VE HAYVANCILIK</div>
+                <div class="brand-box">
+                    <h1 class="welcome-title">KAHRAMAN</h1>
+                    <div class="brand-divider"></div>
+                    <div class="welcome-sub">TARIM VE HAYVANCILIK</div>
+                </div>
                 
                 <div class="clock-container">
                     <div class="clock-center"></div>
@@ -94,7 +126,7 @@
         </div>
 
         <div id="kameralar" class="content-section">
-            <p style="color:#888;">Kameralar yükleniyor gadaşım...</p>
+            <p style="color:#888;">Kameralar yükleniyor...</p>
         </div>
     </div>
 
@@ -141,7 +173,6 @@
             const lastDate = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
             const grid = document.getElementById("daysGrid");
 
-            // JS getDay() Pazar=0 başladığı için düzeltme (Pazartesi=0 yapmak için)
             let startingPoint = firstDay === 0 ? 6 : firstDay - 1;
 
             for (let i = 0; i < startingPoint; i++) {
