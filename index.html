@@ -14,12 +14,18 @@
         .menu-btn { font-size: 24px; cursor: pointer; padding: 0 10px; z-index: 1001; }
         .sayfa-baslik { flex-grow: 1; text-align: center; font-weight: bold; font-size: 14px; letter-spacing: 1px; }
 
-        /* YAN MENÜ */
-        .sidebar { position: fixed; left: -280px; top: 0; width: 260px; height: 100%; background: #111; border-right: 2px solid var(--ana-renk); transition: 0.4s; z-index: 2000; padding: 20px; display: flex; flex-direction: column; }
-        .sidebar.active { left: 0; }
-        .sidebar-header { font-size: 18px; font-weight: 900; margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 10px; color: #fff; text-align: center; }
-        .sidebar-item { padding: 12px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 13px; color: #ccc; display: flex; align-items: center; gap: 10px; }
-        .logout-item { margin-top: auto; padding: 15px; border: 1px solid #441111; background: #221111; color: #ff4444; border-radius: 12px; text-align: center; font-weight: 900; cursor: pointer; }
+        /* YAN MENÜ TASARIMI */
+.sidebar { position: fixed; left: -280px; top: 0; width: 260px; height: 100%; background: #111; border-right: 2px solid var(--ana-renk); transition: 0.4s; z-index: 2000; padding: 20px; display: flex; flex-direction: column; }
+.sidebar.active { left: 0; }
+.sidebar-header { font-size: 18px; font-weight: 900; margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 10px; color: #fff; text-align: center; }
+
+/* Menü Listesi ve Alfabetik Düzen */
+.menu-list { flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
+.sidebar-item { padding: 12px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 13px; color: #ccc; display: flex; align-items: center; gap: 10px; }
+.sidebar-item:active { background: var(--ana-renk); color: #000; }
+
+/* Çıkış Butonu Mesafesi */
+.logout-item { margin-top: auto; padding: 15px; border: 1px solid #441111; background: #221111; color: #ff4444; border-radius: 12px; text-align: center; font-weight: 900; cursor: pointer; }
 
         /* ANA LAYOUT - PC'DE YAN YANA, TELEFONDA ALT ALTA */
         .main-layout { 
@@ -94,15 +100,23 @@
 
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">MENÜ</div>
-        <div class="menu-list">
-            <div class="sidebar-item" onclick="location.reload()">🏠 ANA SAYFA</div>
-            <div class="sidebar-item">📹 KAMERA SİSTEMİ</div>
-            <div class="sidebar-item">🥚 KULUÇKA MAKİNASI</div>
-        </div>
-        <div class="logout-item" onclick="location.reload()">🚪 ÇIKIŞ YAP</div>
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">GÖZCÜ V160</div>
+    
+    <div class="menu-list">
+        <div class="sidebar-item" onclick="location.reload()" style="color:var(--ana-renk)">🏠 ANA SAYFA</div>
+        
+        <div style="font-size: 9px; color: #444; margin: 10px 0 5px 5px; letter-spacing: 2px;">SİSTEMLER (A-Z)</div>
+        
+        <div class="sidebar-item" onclick="showSection('buzagi', 'BUZAĞI DOĞUM LİSTESİ')">🐄 BUZAĞI DOĞUM LİSTESİ</div>
+        <div class="sidebar-item" onclick="showSection('hava', 'HAVA DURUMU')">☁️ HAVA DURUMU</div>
+        <div class="sidebar-item" onclick="showSection('kameralar', 'KAMERA SİSTEMİ')">📹 KAMERA SİSTEMİ</div>
+        <div class="sidebar-item" onclick="showSection('kulucka', 'KULUÇKA MAKİNASI')">🥚 KULUÇKA MAKİNASI</div>
+        <div class="sidebar-item" onclick="showSection('kumes', 'KÜMES VERİLERİ')">🐣 KÜMES VERİLERİ</div>
     </div>
+
+    <div class="logout-item" onclick="location.reload()">🚪 ÇIKIŞ YAP</div>
+</div>
 
     <div class="main-layout">
         <div class="side-panel">
@@ -159,6 +173,11 @@
         document.getElementById("hata").style.display = "block";
     }
 }
+       function showSection(id, title) {
+    // Tüm bölümleri gizle (Bunu bir sonraki adımda detaylandıracağız)
+    alert(title + " sayfası yakında aktif olacak gadaşım!"); 
+    toggleMenu(); // Menüyü kapat
+} 
         function toggleMenu() {
             document.getElementById("sidebar").classList.toggle("active");
             document.getElementById("overlay").classList.toggle("active");
@@ -198,4 +217,5 @@
     </script>
 </body>
 </html>
+
 
