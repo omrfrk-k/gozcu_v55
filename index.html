@@ -7,53 +7,64 @@
     <title>KAHRAMAN TARIM</title>
     <style>
         :root { --ana-renk: #00ff00; --arka-plan: #0a0a0a; --panel-renk: #111; }
-        body { background: var(--arka-plan); color: var(--ana-renk); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; overflow: hidden; }
+        body { background: var(--arka-plan); color: var(--ana-renk); font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
 
         /* ÜST BAR */
         .top-bar { background: #1a1a1a; padding: 12px; display: flex; align-items: center; border-bottom: 1px solid #333; position: sticky; top: 0; z-index: 1000; }
         .menu-btn { font-size: 24px; cursor: pointer; padding: 0 10px; z-index: 1001; }
         .sayfa-baslik { flex-grow: 1; text-align: center; font-weight: bold; font-size: 14px; letter-spacing: 1px; }
 
-        /* YAN MENÜ (SIDEBAR) */
+        /* YAN MENÜ */
         .sidebar { position: fixed; left: -280px; top: 0; width: 260px; height: 100%; background: #111; border-right: 2px solid var(--ana-renk); transition: 0.4s; z-index: 2000; padding: 20px; display: flex; flex-direction: column; }
         .sidebar.active { left: 0; }
         .sidebar-header { font-size: 18px; font-weight: 900; margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 10px; color: #fff; text-align: center; }
-        .menu-list { flex-grow: 1; display: flex; flex-direction: column; gap: 5px; }
         .sidebar-item { padding: 12px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 13px; color: #ccc; display: flex; align-items: center; gap: 10px; }
-        .sidebar-item:active { background: var(--ana-renk); color: #000; }
         .logout-item { margin-top: auto; padding: 15px; border: 1px solid #441111; background: #221111; color: #ff4444; border-radius: 12px; text-align: center; font-weight: 900; cursor: pointer; }
 
-        /* ANA SAYFA ÜÇLÜ LAYOUT */
-        .main-layout { display: flex; height: calc(100vh - 50px); padding: 10px; gap: 10px; box-sizing: border-box; }
-        .side-panel { flex: 1; background: var(--panel-renk); border: 1px solid #333; border-radius: 15px; padding: 15px; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
-        .center-panel { flex: 2; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; background: transparent; border: none; }
+        /* ANA LAYOUT - PC'DE YAN YANA, TELEFONDA ALT ALTA */
+        .main-layout { 
+            display: flex; 
+            flex-direction: row; /* PC'de yan yana */
+            min-height: calc(100vh - 50px); 
+            padding: 10px; 
+            gap: 15px; 
+            box-sizing: border-box; 
+        }
 
-        /* MERKEZ: BAŞLIK, SAAT, TAKVİM */
-        .brand-box { text-align: center; margin-bottom: 15px; }
-        .welcome-title { color: #fff; font-size: 37px; font-weight: 900; text-transform: uppercase; margin: 0; text-shadow: 0 0 15px rgba(0,255,0,0.3); }
-        .brand-divider { height: 3px; width: 60px; background: var(--ana-renk); margin: 8px auto; border-radius: 10px; box-shadow: 0 0 10px var(--ana-renk); }
-        .welcome-sub { color: var(--ana-renk); font-size: 10px; letter-spacing: 4px; font-weight: bold; }
+        /* TELEFON İÇİN ÖZEL AYAR (BURASI SİHRİN OLDUĞU YER) */
+        @media (max-width: 800px) {
+            .main-layout { 
+                flex-direction: column; /* Telefondan girince alt alta diz */
+                overflow-y: auto; 
+                height: auto;
+            }
+            .side-panel { width: 100%; min-height: 200px; }
+            .center-panel { order: -1; width: 100%; } /* Başlık ve Saat hep en üstte kalsın */
+        }
 
-        .clock-container { position: relative; width: 180px; height: 180px; border: 4px solid var(--ana-renk); border-radius: 50%; background: #000; box-shadow: 0 0 20px rgba(0,255,0,0.1); margin-bottom: 15px; }
+        .side-panel { flex: 1; background: var(--panel-renk); border: 1px solid #333; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .center-panel { flex: 1.5; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+
+        /* MERKEZ: KAHRAMAN BAŞLIK + SAAT */
+        .welcome-title { color: #fff; font-size: 37px; font-weight: 900; text-transform: uppercase; margin: 0; text-shadow: 0 0 15px rgba(0,255,0,0.3); text-align: center; }
+        .brand-divider { height: 3px; width: 60px; background: var(--ana-renk); margin: 10px auto; border-radius: 10px; }
+        .welcome-sub { color: var(--ana-renk); font-size: 10px; letter-spacing: 4px; font-weight: bold; margin-bottom: 15px; }
+
+        .clock-container { position: relative; width: 180px; height: 180px; border: 4px solid var(--ana-renk); border-radius: 50%; background: #000; margin-bottom: 20px; }
         .number { position: absolute; width: 100%; height: 100%; text-align: center; font-weight: bold; font-size: 12px; color: #fff; padding: 4px; box-sizing: border-box; }
         .n12 { transform: rotate(0deg); } .n3 { transform: rotate(90deg); } .n3 span { display:block; transform: rotate(-90deg); } .n6 { transform: rotate(180deg); } .n6 span { display:block; transform: rotate(-180deg); } .n9 { transform: rotate(270deg); } .n9 span { display:block; transform: rotate(-270deg); }
         .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; border-radius: 5px; }
         .hour-hand { width: 5px; height: 40px; background: #fff; }
-        .min-hand { width: 3px; height: 60px; background: var(--ana-renk); }
-        .sec-hand { width: 1.5px; height: 70px; background: #ff4444; }
+        .min-hand { width: 3px; height: 65px; background: var(--ana-renk); }
+        .sec-hand { width: 1.5px; height: 75px; background: #ff4444; }
 
-        .calendar-box { background: #111; border: 1px solid #333; border-radius: 12px; width: 200px; padding: 10px; }
-        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; font-size: 9px; }
-        .day-num.today { background: var(--ana-renk); color: #000; border-radius: 3px; font-weight: bold; }
+        .calendar-box { background: #111; border: 1px solid #333; border-radius: 15px; width: 220px; padding: 15px; }
+        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; font-size: 10px; }
+        .day-num.today { background: var(--ana-renk); color: #000; border-radius: 4px; font-weight: bold; }
 
-        /* DİĞER SAYFALAR */
-        .content-section { display: none; padding: 20px; width: 100%; flex-direction: column; align-items: center; }
-        .content-section.active { display: flex; }
-
-        /* WIDGET STİLLERİ */
-        .panel-title { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid #222; width: 100%; text-align: center; padding-bottom: 5px; }
-        .temp-display { font-size: 32px; font-weight: bold; color: #fff; margin: 10px 0; }
-        .note-area { background: #000; border: 1px solid #222; border-radius: 10px; padding: 10px; color: #aaa; font-size: 11px; width: 100%; height: 150px; overflow-y: auto; text-align: left; line-height: 1.6; }
+        /* WIDGETLAR */
+        .temp-val { font-size: 48px; font-weight: bold; color: #fff; margin: 15px 0; }
+        .note-text { width: 100%; color: #aaa; font-size: 13px; line-height: 1.8; text-align: left; }
         
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1500; }
         .overlay.active { display: block; }
@@ -63,87 +74,68 @@
 
     <div class="top-bar">
         <div class="menu-btn" onclick="toggleMenu()">☰</div>
-        <div class="sayfa-baslik" id="current-title">ANA SAYFA</div>
+        <div class="sayfa-baslik">KAHRAMAN TARIM V150</div>
     </div>
 
     <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">GÖZCÜ V140</div>
+        <div class="sidebar-header">MENÜ</div>
         <div class="menu-list">
-            <div class="sidebar-item" onclick="showSection('welcome', 'ANA SAYFA')" style="color:var(--ana-renk)">🏠 ANA SAYFA</div>
-            <div style="font-size: 9px; color: #444; margin: 10px 0 5px 5px; letter-spacing: 2px;">ALFABETİK SİSTEMLER</div>
-            <div class="sidebar-item" onclick="showSection('buzagi', 'BUZAĞI DOĞUM LİSTESİ')">🐄 BUZAĞI DOĞUM LİSTESİ</div>
-            <div class="sidebar-item" onclick="showSection('hava', 'HAVA DURUMU')">☁️ HAVA DURUMU</div>
-            <div class="sidebar-item" onclick="showSection('kameralar', 'KAMERA SİSTEMİ')">📹 KAMERA SİSTEMİ</div>
-            <div class="sidebar-item" onclick="showSection('kulucka', 'KULUÇKA MAKİNASI')">🥚 KULUÇKA MAKİNASI</div>
-            <div class="sidebar-item" onclick="showSection('kumes', 'KÜMES VERİLERİ')">🐣 KÜMES VERİLERİ</div>
+            <div class="sidebar-item" onclick="location.reload()">🏠 ANA SAYFA</div>
+            <div class="sidebar-item">📹 KAMERA SİSTEMİ</div>
+            <div class="sidebar-item">🥚 KULUÇKA MAKİNASI</div>
         </div>
         <div class="logout-item" onclick="location.reload()">🚪 ÇIKIŞ YAP</div>
     </div>
 
-    <div id="welcome" class="content-section active">
-        <div class="main-layout">
-            <div class="side-panel">
-                <div class="panel-title">Hava Durumu</div>
-                <div style="color:var(--ana-renk); font-size: 12px; letter-spacing: 1px;">SAMSUN / BAFRA</div>
-                <div class="temp-display" id="mainTemp">--°C</div>
-                <div style="font-size: 11px; color: #555;">Anlık Meteoroloji Verisi</div>
+    <div class="main-layout">
+        <div class="side-panel">
+            <div style="font-size: 12px; color: #666; letter-spacing: 2px;">BAFRA / SAMSUN</div>
+            <div class="temp-val" id="temp">--°C</div>
+            <div style="color: var(--ana-renk); font-weight: bold;">CANLI HAVA DURUMU</div>
+        </div>
+
+        <div class="center-panel">
+            <div class="brand-box">
+                <h1 class="welcome-title">KAHRAMAN</h1>
+                <div class="brand-divider"></div>
+                <div class="welcome-sub">TARIM VE HAYVANCILIK</div>
+            </div>
+            
+            <div class="clock-container">
+                <div class="number n12"><span>12</span></div>
+                <div class="number n3"><span>3</span></div>
+                <div class="number n6"><span>6</span></div>
+                <div class="number n9"><span>9</span></div>
+                <div class="hand hour-hand" id="hourHand"></div>
+                <div class="hand min-hand" id="minHand"></div>
+                <div class="hand sec-hand" id="secHand"></div>
             </div>
 
-            <div class="center-panel">
-                <div class="brand-box">
-                    <h1 class="welcome-title">KAHRAMAN</h1>
-                    <div class="brand-divider"></div>
-                    <div class="welcome-sub">TARIM VE HAYVANCILIK</div>
-                </div>
-                <div class="clock-container">
-                    <div class="number n12"><span>12</span></div>
-                    <div class="number n3"><span>3</span></div>
-                    <div class="number n6"><span>6</span></div>
-                    <div class="number n9"><span>9</span></div>
-                    <div class="hand hour-hand" id="hourHand"></div>
-                    <div class="hand min-hand" id="minHand"></div>
-                    <div class="hand sec-hand" id="secHand"></div>
-                </div>
-                <div class="calendar-box">
-                    <div id="calMonth" style="font-size: 10px; margin-bottom: 5px; text-align: center; font-weight: bold; color: #fff;">...</div>
-                    <div class="days-grid" id="daysGrid">
-                        <div style="color:var(--ana-renk)">Pz</div><div>Sa</div><div>Ça</div><div>Pe</div><div>Cu</div><div>Ct</div><div>Pa</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="side-panel">
-                <div class="panel-title">Duyuru & Notlar</div>
-                <div style="background: rgba(0,255,0,0.05); border-left: 2px solid var(--ana-renk); padding: 8px; font-size: 10px; margin-bottom: 10px; text-align: left;">
-                    <b>SİSTEM:</b> Kocaeli Üni. 2. Dönem İME (Primer Enerji) kayıtları aktif.
-                </div>
-                <div class="note-area">
-                    • Kuluçka makinesi su seviyesini kontrol et.<br>
-                    • Buzağı listesini güncelle.<br>
-                    • İzmit yolculuğu için hazırlıkları tamamla.<br>
-                    • Akşam kameraları kontrol et.
+            <div class="calendar-box">
+                <div id="calMonth" style="text-align:center; font-weight:bold; margin-bottom:10px; font-size:12px;">ŞUBAT 2026</div>
+                <div class="days-grid" id="daysGrid">
+                    <div style="color:var(--ana-renk)">Pz</div><div>Sa</div><div>Ça</div><div>Pe</div><div>Cu</div><div>Ct</div><div>Pa</div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="kameralar" class="content-section"><h2>📹 KAMERA SİSTEMİ</h2><p>Sinyal Bekleniyor...</p></div>
-    <div id="kulucka" class="content-section"><h2>🥚 KULUÇKA VERİLERİ</h2></div>
-    <div id="kumes" class="content-section"><h2>🐣 KÜMES VERİLERİ</h2></div>
+        <div class="side-panel">
+            <div style="font-size: 12px; color: #666; letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid #333; width: 100%; text-align: center; padding-bottom: 5px;">NOTLAR & DUYURULAR</div>
+            <div class="note-text">
+                • Kuluçka nem oranını kontrol et.<br>
+                • Akşam kameraları İzmit'ten izle.<br>
+                • Primer Enerji staj evraklarını hazırla.<br>
+                • Bafra'dan selamlar gadaşım!
+            </div>
+        </div>
+    </div>
 
     <script>
         function toggleMenu() {
             document.getElementById("sidebar").classList.toggle("active");
             document.getElementById("overlay").classList.toggle("active");
-        }
-
-        function showSection(id, title) {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            document.getElementById('current-title').innerText = title;
-            toggleMenu();
         }
 
         function updateClock() {
@@ -158,17 +150,15 @@
             try {
                 const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=41.5677&longitude=35.9069&current_weather=true');
                 const data = await res.json();
-                document.getElementById("mainTemp").innerText = data.current_weather.temperature + "°C";
-            } catch (e) { document.getElementById("mainTemp").innerText = "HATA"; }
+                document.getElementById("temp").innerText = data.current_weather.temperature + "°C";
+            } catch (e) { document.getElementById("temp").innerText = "HATA"; }
         }
 
         function createCalendar() {
             const now = new Date();
-            const aylar = ["OCAK", "ŞUBAT", "MART", "NİSAN", "MAYIS", "HAZİRAN", "TEMMUZ", "AĞUSTOS", "EYLÜL", "EKİM", "KASIM", "ARALIK"];
-            document.getElementById("calMonth").innerText = aylar[now.getMonth()] + " " + now.getFullYear();
             const grid = document.getElementById("daysGrid");
-            const first = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
             const last = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+            const first = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
             let start = first === 0 ? 6 : first - 1;
             for (let i = 0; i < start; i++) grid.innerHTML += `<div></div>`;
             for (let i = 1; i <= last; i++) {
