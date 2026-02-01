@@ -68,9 +68,24 @@
         
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1500; }
         .overlay.active { display: block; }
+
+         /* GİRİŞ EKRANI TASARIMI */
+         #giris-ekrani { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--arka-plan); position: fixed; width: 100%; top: 0; left: 0; z-index: 5000; }
+        .login-box { padding: 30px; border: 1px solid #333; border-radius: 20px; background: #111; width: 280px; text-align: center; }
+        .login-box input { background: #000; border: 1px solid #333; color: var(--ana-renk); padding: 12px; width: 85%; border-radius: 10px; margin-bottom: 12px; text-align: center; outline: none; }
     </style>
 </head>
 <body>
+
+    <div id="giris-ekrani">
+    <div class="login-box">
+        <h3 style="color: var(--ana-renk); margin-bottom: 20px;">GÖZCÜ V160</h3>
+        <input type="text" id="userInput" placeholder="Kullanıcı Adı">
+        <input type="password" id="passInput" placeholder="Şifre">
+        <button class="btn-aksiyon" style="background: var(--ana-renk); color: #000; border: none; padding: 14px; width: 95%; border-radius: 10px; font-weight: bold; cursor: pointer;" onclick="login()">SİSTEME GİRİŞ</button>
+        <p id="hata" style="color: red; font-size: 11px; margin-top: 10px; display: none;">Hatalı Giriş Gadaşım!</p>
+    </div>
+</div>
 
     <div class="top-bar">
         <div class="menu-btn" onclick="toggleMenu()">☰</div>
@@ -133,6 +148,17 @@
     </div>
 
     <script>
+
+        function login() {
+    const user = document.getElementById("userInput").value;
+    const pass = document.getElementById("passInput").value;
+    if (user === "admin" && pass === "5528") {
+        document.getElementById("giris-ekrani").style.display = "none";
+        getHava(); // Giriş yapınca verileri çek
+    } else {
+        document.getElementById("hata").style.display = "block";
+    }
+}
         function toggleMenu() {
             document.getElementById("sidebar").classList.toggle("active");
             document.getElementById("overlay").classList.toggle("active");
@@ -172,3 +198,4 @@
     </script>
 </body>
 </html>
+
