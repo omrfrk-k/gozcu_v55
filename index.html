@@ -15,43 +15,27 @@
         .sayfa-baslik { flex-grow: 1; text-align: center; font-weight: bold; font-size: 14px; letter-spacing: 1px; }
 
         /* YAN MENÜ TASARIMI */
-.sidebar { position: fixed; left: -280px; top: 0; width: 260px; height: 100%; background: #111; border-right: 2px solid var(--ana-renk); transition: 0.4s; z-index: 2000; padding: 20px; display: flex; flex-direction: column; }
-.sidebar.active { left: 0; }
-.sidebar-header { font-size: 18px; font-weight: 900; margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 10px; color: #fff; text-align: center; }
+        .sidebar { position: fixed; left: -280px; top: 0; width: 260px; height: 100%; background: #111; border-right: 2px solid var(--ana-renk); transition: 0.4s; z-index: 2000; padding: 20px; display: flex; flex-direction: column; }
+        .sidebar.active { left: 0; }
+        .sidebar-header { font-size: 18px; font-weight: 900; margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 10px; color: #fff; text-align: center; }
+        .menu-list { flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-item { padding: 12px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 13px; color: #ccc; display: flex; align-items: center; gap: 10px; }
+        .sidebar-item:active { background: var(--ana-renk); color: #000; }
+        .logout-item { margin-top: auto; padding: 15px; border: 1px solid #441111; background: #221111; color: #ff4444; border-radius: 12px; text-align: center; font-weight: 900; cursor: pointer; }
 
-/* Menü Listesi ve Alfabetik Düzen */
-.menu-list { flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
-.sidebar-item { padding: 12px 15px; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 13px; color: #ccc; display: flex; align-items: center; gap: 10px; }
-.sidebar-item:active { background: var(--ana-renk); color: #000; }
-
-/* Çıkış Butonu Mesafesi */
-.logout-item { margin-top: auto; padding: 15px; border: 1px solid #441111; background: #221111; color: #ff4444; border-radius: 12px; text-align: center; font-weight: 900; cursor: pointer; }
-
-        /* ANA LAYOUT - PC'DE YAN YANA, TELEFONDA ALT ALTA */
-        .main-layout { 
-            display: flex; 
-            flex-direction: row; /* PC'de yan yana */
-            min-height: calc(100vh - 50px); 
-            padding: 10px; 
-            gap: 15px; 
-            box-sizing: border-box; 
-        }
-
-        /* TELEFON İÇİN ÖZEL AYAR (BURASI SİHRİN OLDUĞU YER) */
+        /* ANA LAYOUT */
+        .main-layout { display: flex; flex-direction: row; min-height: calc(100vh - 50px); padding: 10px; gap: 15px; box-sizing: border-box; }
+        
         @media (max-width: 800px) {
-            .main-layout { 
-                flex-direction: column; /* Telefondan girince alt alta diz */
-                overflow-y: auto; 
-                height: auto;
-            }
+            .main-layout { flex-direction: column; overflow-y: auto; height: auto; }
             .side-panel { width: 100%; min-height: 200px; }
-            .center-panel { order: -1; width: 100%; } /* Başlık ve Saat hep en üstte kalsın */
+            .center-panel { order: -1; width: 100%; }
         }
 
         .side-panel { flex: 1; background: var(--panel-renk); border: 1px solid #333; border-radius: 20px; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .center-panel { flex: 1.5; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
 
-        /* MERKEZ: KAHRAMAN BAŞLIK + SAAT */
+        /* BAŞLIK VE SAAT */
         .welcome-title { color: #fff; font-size: 37px; font-weight: 900; text-transform: uppercase; margin: 0; text-shadow: 0 0 15px rgba(0,255,0,0.3); text-align: center; }
         .brand-divider { height: 3px; width: 60px; background: var(--ana-renk); margin: 10px auto; border-radius: 10px; }
         .welcome-sub { color: var(--ana-renk); font-size: 10px; letter-spacing: 4px; font-weight: bold; margin-bottom: 15px; }
@@ -75,125 +59,139 @@
         .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1500; }
         .overlay.active { display: block; }
 
-         /* GİRİŞ EKRANI TASARIMI */
-         #giris-ekrani { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--arka-plan); position: fixed; width: 100%; top: 0; left: 0; z-index: 5000; }
+        /* GİRİŞ EKRANI */
+        #giris-ekrani { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--arka-plan); position: fixed; width: 100%; top: 0; left: 0; z-index: 5000; }
         .login-box { padding: 30px; border: 1px solid #333; border-radius: 20px; background: #111; width: 280px; text-align: center; }
         .login-box input { background: #000; border: 1px solid #333; color: var(--ana-renk); padding: 12px; width: 85%; border-radius: 10px; margin-bottom: 12px; text-align: center; outline: none; }
+        .btn-aksiyon { background: var(--ana-renk); color: #000; border: none; padding: 14px; width: 95%; border-radius: 10px; font-weight: bold; cursor: pointer; }
+
+        /* SAYFA GİZLEME */
+        .content-section { display: none; }
     </style>
 </head>
 <body>
 
-   
     <div id="giris-ekrani">
-    <div class="login-box">
-        <h3 style="color: var(--ana-renk); margin-bottom: 20px;">GÖZCÜ V160</h3>
-        <input type="text" id="userInput" placeholder="Kullanıcı Adı">
-        <input type="password" id="passInput" placeholder="Şifre">
-        <button class="btn-aksiyon" style="background: var(--ana-renk); color: #000; border: none; padding: 14px; width: 95%; border-radius: 10px; font-weight: bold; cursor: pointer;" onclick="login()">SİSTEME GİRİŞ</button>
-        <p id="hata" style="color: red; font-size: 11px; margin-top: 10px; display: none;">Hatalı Giriş Gadaşım!</p>
-    </div>
-</div>
-
-    <div class="top-bar">
-        <div class="menu-btn" onclick="toggleMenu()">☰</div>
-        <div class="sayfa-baslik">KAHRAMAN TARIM V150</div>
+        <div class="login-box">
+            <h3 style="color: var(--ana-renk); margin-bottom: 20px;">GÖZCÜ V160</h3>
+            <input type="text" id="userInput" placeholder="Kullanıcı Adı">
+            <input type="password" id="passInput" placeholder="Şifre">
+            <button class="btn-aksiyon" onclick="login()">SİSTEME GİRİŞ</button>
+            <p id="hata" style="color: red; font-size: 11px; margin-top: 10px; display: none;">Hatalı Giriş Gadaşım!</p>
+        </div>
     </div>
 
-    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
-
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-header">GÖZCÜ V160</div>
-    
-    <div class="menu-list">
-        <div class="sidebar-item" onclick="location.reload()" style="color:var(--ana-renk)">🏠 ANA SAYFA</div>
-        
-        <div style="font-size: 9px; color: #444; margin: 10px 0 5px 5px; letter-spacing: 2px;">SİSTEMLER (A-Z)</div>
-        
-        <div class="sidebar-item" onclick="showSection('buzagi', 'BUZAĞI DOĞUM LİSTESİ')">🐄 BUZAĞI DOĞUM LİSTESİ</div>
-        <div class="sidebar-item" onclick="showSection('hava', 'HAVA DURUMU')">☁️ HAVA DURUMU</div>
-        <div class="sidebar-item" onclick="showSection('kameralar', 'KAMERA SİSTEMİ')">📹 KAMERA SİSTEMİ</div>
-        <div class="sidebar-item" onclick="showSection('kulucka', 'KULUÇKA MAKİNASI')">🥚 KULUÇKA MAKİNASI</div>
-        <div class="sidebar-item" onclick="showSection('kumes', 'KÜMES VERİLERİ')">🐣 KÜMES VERİLERİ</div>
-    </div>
-
-    <div class="logout-item" onclick="location.reload()">🚪 ÇIKIŞ YAP</div>
-</div>
-
-    <div class="main-layout">
-        <div class="side-panel">
-            <div style="font-size: 12px; color: #666; letter-spacing: 2px;">BAFRA / SAMSUN</div>
-            <div class="temp-val" id="temp">--°C</div>
-            <div style="color: var(--ana-renk); font-weight: bold;">CANLI HAVA DURUMU</div>
+    <div id="ana-sayfa-root" style="display: none;">
+        <div class="top-bar">
+            <div class="menu-btn" onclick="toggleMenu()">☰</div>
+            <div class="sayfa-baslik" id="current-title">ANA SAYFA</div>
         </div>
 
-        <div class="center-panel">
-            <div class="brand-box">
-                <h1 class="welcome-title">KAHRAMAN</h1>
-                <div class="brand-divider"></div>
-                <div class="welcome-sub">TARIM VE HAYVANCILIK</div>
-            </div>
-            
-            <div class="clock-container">
-                <div class="number n12"><span>12</span></div>
-                <div class="number n3"><span>3</span></div>
-                <div class="number n6"><span>6</span></div>
-                <div class="number n9"><span>9</span></div>
-                <div class="hand hour-hand" id="hourHand"></div>
-                <div class="hand min-hand" id="minHand"></div>
-                <div class="hand sec-hand" id="secHand"></div>
-            </div>
+        <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-            <div class="calendar-box">
-                <div id="calMonth" style="text-align:center; font-weight:bold; margin-bottom:10px; font-size:12px;">ŞUBAT 2026</div>
-                <div class="days-grid" id="daysGrid">
-                    <div style="color:var(--ana-renk)">Pz</div><div>Sa</div><div>Ça</div><div>Pe</div><div>Cu</div><div>Ct</div><div>Pa</div>
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">GÖZCÜ V160</div>
+            <div class="menu-list">
+                <div class="sidebar-item" onclick="showSection('welcome', 'ANA SAYFA')" style="color:var(--ana-renk)">🏠 ANA SAYFA</div>
+                <div style="font-size: 9px; color: #444; margin: 10px 0 5px 5px; letter-spacing: 2px;">SİSTEMLER (A-Z)</div>
+                <div class="sidebar-item" onclick="showSection('buzagi', 'BUZAĞI DOĞUM LİSTESİ')">🐄 BUZAĞI DOĞUM LİSTESİ</div>
+                <div class="sidebar-item" onclick="showSection('hava', 'HAVA DURUMU')">☁️ HAVA DURUMU</div>
+                <div class="sidebar-item" onclick="showSection('kameralar', 'KAMERA SİSTEMİ')">📹 KAMERA SİSTEMİ</div>
+                <div class="sidebar-item" onclick="showSection('kulucka', 'KULUÇKA MAKİNASI')">🥚 KULUÇKA MAKİNASI</div>
+                <div class="sidebar-item" onclick="showSection('kumes', 'KÜMES VERİLERİ')">🐣 KÜMES VERİLERİ</div>
+            </div>
+            <div class="logout-item" onclick="location.reload()">🚪 ÇIKIŞ YAP</div>
+        </div>
+
+        <div id="welcome" class="content-section" style="display: block;">
+            <div class="main-layout">
+                <div class="side-panel">
+                    <div style="font-size: 12px; color: #666; letter-spacing: 2px;">BAFRA / SAMSUN</div>
+                    <div class="temp-val" id="temp">--°C</div>
+                    <div style="color: var(--ana-renk); font-weight: bold;">CANLI HAVA DURUMU</div>
+                </div>
+
+                <div class="center-panel">
+                    <div class="brand-box">
+                        <h1 class="welcome-title">KAHRAMAN</h1>
+                        <div class="brand-divider"></div>
+                        <div class="welcome-sub">TARIM VE HAYVANCILIK</div>
+                    </div>
+                    <div class="clock-container">
+                        <div class="number n12"><span>12</span></div>
+                        <div class="number n3"><span>3</span></div>
+                        <div class="number n6"><span>6</span></div>
+                        <div class="number n9"><span>9</span></div>
+                        <div class="hand hour-hand" id="hourHand"></div>
+                        <div class="hand min-hand" id="minHand"></div>
+                        <div class="hand sec-hand" id="secHand"></div>
+                    </div>
+                    <div class="calendar-box">
+                        <div id="calMonth" style="text-align:center; font-weight:bold; margin-bottom:10px; font-size:12px;">ŞUBAT 2026</div>
+                        <div class="days-grid" id="daysGrid">
+                            <div style="color:var(--ana-renk)">Pz</div><div>Sa</div><div>Ça</div><div>Pe</div><div>Cu</div><div>Ct</div><div>Pa</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="side-panel">
+                    <div style="font-size: 12px; color: #666; letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid #333; width: 100%; text-align: center; padding-bottom: 5px;">NOTLAR & DUYURULAR</div>
+                    <div class="note-text">
+                        • Kuluçka nem oranını kontrol et.<br>
+                        • Akşam kameraları İzmit'ten izle.<br>
+                        • Primer Enerji staj evraklarını hazırla.<br>
+                        • Bafra'dan selamlar gadaşım!
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="side-panel">
-            <div style="font-size: 12px; color: #666; letter-spacing: 2px; margin-bottom: 15px; border-bottom: 1px solid #333; width: 100%; text-align: center; padding-bottom: 5px;">NOTLAR & DUYURULAR</div>
-            <div class="note-text">
-                • Kuluçka nem oranını kontrol et.<br>
-                • Akşam kameraları İzmit'ten izle.<br>
-                • Primer Enerji staj evraklarını hazırla.<br>
-                • Bafra'dan selamlar gadaşım!
+        <div id="buzagi" class="content-section" style="padding: 20px;">
+            <h2 style="color: #fff; text-align: center;">🐄 BUZAĞI DOĞUM TAKİBİ</h2>
+            <div style="background: #111; padding: 15px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px;">
+                <input type="text" id="buzagiAd" placeholder="Buzağı No / Adı" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 8px; box-sizing: border-box;">
+                <input type="date" id="dogumTarih" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 8px; box-sizing: border-box;">
+                <button onclick="buzagiEkle()" style="width: 100%; background: var(--ana-renk); color: #000; font-weight: bold; padding: 12px; border: none; border-radius: 8px; cursor: pointer;">KAYDET</button>
             </div>
+            <div id="buzagiListe" style="width: 100%;"></div>
         </div>
+
+        <div id="hava" class="content-section" style="padding: 20px; text-align: center;"><h2>☁️ HAVA DURUMU DETAYI</h2></div>
+        <div id="kameralar" class="content-section" style="padding: 20px; text-align: center;"><h2>📹 CANLI KAMERALAR</h2></div>
+        <div id="kulucka" class="content-section" style="padding: 20px; text-align: center;"><h2>🥚 KULUÇKA DURUMU</h2></div>
+        <div id="kumes" class="content-section" style="padding: 20px; text-align: center;"><h2>🐣 KÜMES VERİLERİ</h2></div>
     </div>
 
     <script>
-
         function login() {
-    const user = document.getElementById("userInput").value;
-    const pass = document.getElementById("passInput").value;
-    if (user === "admin" && pass === "5528") {
-        document.getElementById("giris-ekrani").style.display = "none";
-        getHava(); // Giriş yapınca verileri çek
-    } else {
-        document.getElementById("hata").style.display = "block";
-    }
-}
-       function showSection(id, title) {
-    // 1. Önce tüm sayfaları (sectionları) gizle
-    const sections = document.querySelectorAll('.content-section');
-    sections.forEach(s => s.style.display = 'none');
+            const user = document.getElementById("userInput").value;
+            const pass = document.getElementById("passInput").value;
+            if (user === "admin" && pass === "5528") {
+                document.getElementById("giris-ekrani").style.display = "none";
+                document.getElementById("ana-sayfa-root").style.display = "block";
+                getHava();
+                createCalendar();
+                setInterval(updateClock, 1000);
+            } else {
+                document.getElementById("hata").style.display = "block";
+            }
+        }
 
-    // 2. Sadece tıklanan sayfayı göster
-    const hedef = document.getElementById(id);
-    if(hedef) {
-        hedef.style.display = 'flex';
-        hedef.style.flexDirection = 'column';
-    }
-
-    // 3. Üst bar başlığını değiştir ve menüyü kapat
-    document.getElementById('current-title').innerText = title;
-    toggleMenu();
-}
-} 
         function toggleMenu() {
             document.getElementById("sidebar").classList.toggle("active");
             document.getElementById("overlay").classList.toggle("active");
+        }
+
+        function showSection(id, title) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(s => s.style.display = 'none');
+
+            const hedef = document.getElementById(id);
+            if(hedef) {
+                hedef.style.display = 'block';
+            }
+            document.getElementById('current-title').innerText = title;
+            toggleMenu();
         }
 
         function updateClock() {
@@ -224,58 +222,26 @@
             }
         }
 
-        setInterval(updateClock, 1000);
-        getHava();
-        createCalendar();
-
         function buzagiEkle() {
-    const ad = document.getElementById("buzagiAd").value;
-    const tarih = document.getElementById("dogumTarih").value;
+            const ad = document.getElementById("buzagiAd").value;
+            const tarih = document.getElementById("dogumTarih").value;
 
-    if(ad == "" || tarih == "") {
-        alert("Gadaşım, küpe numarasını ve tarihi girmeden nereye? Boş bırakma!");
-        return;
-    }
+            if(ad == "" || tarih == "") {
+                alert("Gadaşım, boş yer bırakma!");
+                return;
+            }
 
-    const liste = document.getElementById("buzagiListe");
-    
-    // Yeni bir liste elemanı oluşturuyoruz
-    const yeniKayit = document.createElement("div");
-    yeniKayit.style = "background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;";
-    yeniKayit.innerHTML = `
-        <div>
-            <b style="color: #fff;">${ad}</b><br>
-            <small style="color: #666;">Doğum: ${tarih}</small>
-        </div>
-        <button onclick="this.parentElement.remove()" style="background: none; border: 1px solid #ff4444; color: #ff4444; padding: 5px 10px; border-radius: 5px; font-size: 10px; cursor: pointer;">SİL</button>
-    `;
-    
-    liste.prepend(yeniKayit); // Yeni kaydı en üste ekler
-    
-    // Formu temizle
-    document.getElementById("buzagiAd").value = "";
-    document.getElementById("dogumTarih").value = "";
-}
-
-    
+            const liste = document.getElementById("buzagiListe");
+            const yeniKayit = document.createElement("div");
+            yeniKayit.style = "background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;";
+            yeniKayit.innerHTML = `
+                <div><b style="color: #fff;">${ad}</b><br><small style="color: #666;">Doğum: ${tarih}</small></div>
+                <button onclick="this.parentElement.remove()" style="background: none; border: 1px solid #ff4444; color: #ff4444; padding: 5px 10px; border-radius: 5px; font-size: 10px; cursor: pointer;">SİL</button>
+            `;
+            liste.prepend(yeniKayit);
+            document.getElementById("buzagiAd").value = "";
+            document.getElementById("dogumTarih").value = "";
+        }
     </script>
-
-    <div id="buzagi" class="content-section" style="display:none; padding: 20px;">
-    <h2 style="color: #fff; text-align: center;">🐄 BUZAĞI DOĞUM TAKİBİ</h2>
-    
-    <div style="background: #111; padding: 15px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px;">
-        <input type="text" id="buzagiAd" placeholder="Buzağı No / Adı" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 8px; box-sizing: border-box;">
-        <input type="date" id="dogumTarih" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 8px; box-sizing: border-box;">
-        <button onclick="buzagiEkle()" style="width: 100%; background: var(--ana-renk); color: #000; font-weight: bold; padding: 12px; border: none; border-radius: 8px; cursor: pointer;">KAYDET</button>
-    </div>
-
-    <div id="buzagiListe" style="width: 100%;">
-        </div>
-</div>
-    
 </body>
 </html>
-
-
-
-
