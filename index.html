@@ -83,34 +83,7 @@
 </head>
 <body>
 
-    // Buzağıları tarayıcı hafızasına kaydeder
-function buzagiEkle() {
-    const ad = document.getElementById("buzagiAd").value;
-    const tarih = document.getElementById("dogumTarih").value;
-
-    if(ad == "" || tarih == "") {
-        alert("Gadaşım boş yer bırakma!");
-        return;
-    }
-
-    const liste = document.getElementById("buzagiListe");
-    const yeniKayit = `
-        <div style="background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-            <div>
-                <b style="color: #fff;">${ad}</b><br>
-                <small style="color: #666;">Doğum: ${tarih}</small>
-            </div>
-            <button onclick="this.parentElement.remove()" style="background: none; border: 1px solid #ff4444; color: #ff4444; padding: 5px 10px; border-radius: 5px; font-size: 10px;">SİL</button>
-        </div>
-    `;
-    
-    liste.innerHTML += yeniKayit;
-    
-    // Formu temizle
-    document.getElementById("buzagiAd").value = "";
-    document.getElementById("dogumTarih").value = "";
-}
-
+   
     <div id="giris-ekrani">
     <div class="login-box">
         <h3 style="color: var(--ana-renk); margin-bottom: 20px;">GÖZCÜ V160</h3>
@@ -202,9 +175,21 @@ function buzagiEkle() {
     }
 }
        function showSection(id, title) {
-    // Tüm bölümleri gizle (Bunu bir sonraki adımda detaylandıracağız)
-    alert(title + " sayfası yakında aktif olacak gadaşım!"); 
-    toggleMenu(); // Menüyü kapat
+    // 1. Önce tüm sayfaları (sectionları) gizle
+    const sections = document.querySelectorAll('.content-section');
+    sections.forEach(s => s.style.display = 'none');
+
+    // 2. Sadece tıklanan sayfayı göster
+    const hedef = document.getElementById(id);
+    if(hedef) {
+        hedef.style.display = 'flex';
+        hedef.style.flexDirection = 'column';
+    }
+
+    // 3. Üst bar başlığını değiştir ve menüyü kapat
+    document.getElementById('current-title').innerText = title;
+    toggleMenu();
+}
 } 
         function toggleMenu() {
             document.getElementById("sidebar").classList.toggle("active");
@@ -242,9 +227,55 @@ function buzagiEkle() {
         setInterval(updateClock, 1000);
         getHava();
         createCalendar();
+
+        function buzagiEkle() {
+    const ad = document.getElementById("buzagiAd").value;
+    const tarih = document.getElementById("dogumTarih").value;
+
+    if(ad == "" || tarih == "") {
+        alert("Gadaşım, küpe numarasını ve tarihi girmeden nereye? Boş bırakma!");
+        return;
+    }
+
+    const liste = document.getElementById("buzagiListe");
+    
+    // Yeni bir liste elemanı oluşturuyoruz
+    const yeniKayit = document.createElement("div");
+    yeniKayit.style = "background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;";
+    yeniKayit.innerHTML = `
+        <div>
+            <b style="color: #fff;">${ad}</b><br>
+            <small style="color: #666;">Doğum: ${tarih}</small>
+        </div>
+        <button onclick="this.parentElement.remove()" style="background: none; border: 1px solid #ff4444; color: #ff4444; padding: 5px 10px; border-radius: 5px; font-size: 10px; cursor: pointer;">SİL</button>
+    `;
+    
+    liste.prepend(yeniKayit); // Yeni kaydı en üste ekler
+    
+    // Formu temizle
+    document.getElementById("buzagiAd").value = "";
+    document.getElementById("dogumTarih").value = "";
+}
+
+    
     </script>
+
+    <div id="buzagi" class="content-section" style="display:none; padding: 20px;">
+    <h2 style="color: #fff; text-align: center;">🐄 BUZAĞI DOĞUM TAKİBİ</h2>
+    
+    <div style="background: #111; padding: 15px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px;">
+        <input type="text" id="buzagiAd" placeholder="Buzağı No / Adı" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 8px; box-sizing: border-box;">
+        <input type="date" id="dogumTarih" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 8px; box-sizing: border-box;">
+        <button onclick="buzagiEkle()" style="width: 100%; background: var(--ana-renk); color: #000; font-weight: bold; padding: 12px; border: none; border-radius: 8px; cursor: pointer;">KAYDET</button>
+    </div>
+
+    <div id="buzagiListe" style="width: 100%;">
+        </div>
+</div>
+    
 </body>
 </html>
+
 
 
 
