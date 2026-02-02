@@ -83,6 +83,34 @@
 </head>
 <body>
 
+    // Buzağıları tarayıcı hafızasına kaydeder
+function buzagiEkle() {
+    const ad = document.getElementById("buzagiAd").value;
+    const tarih = document.getElementById("dogumTarih").value;
+
+    if(ad == "" || tarih == "") {
+        alert("Gadaşım boş yer bırakma!");
+        return;
+    }
+
+    const liste = document.getElementById("buzagiListe");
+    const yeniKayit = `
+        <div style="background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <b style="color: #fff;">${ad}</b><br>
+                <small style="color: #666;">Doğum: ${tarih}</small>
+            </div>
+            <button onclick="this.parentElement.remove()" style="background: none; border: 1px solid #ff4444; color: #ff4444; padding: 5px 10px; border-radius: 5px; font-size: 10px;">SİL</button>
+        </div>
+    `;
+    
+    liste.innerHTML += yeniKayit;
+    
+    // Formu temizle
+    document.getElementById("buzagiAd").value = "";
+    document.getElementById("dogumTarih").value = "";
+}
+
     <div id="giris-ekrani">
     <div class="login-box">
         <h3 style="color: var(--ana-renk); margin-bottom: 20px;">GÖZCÜ V160</h3>
@@ -217,5 +245,6 @@
     </script>
 </body>
 </html>
+
 
 
