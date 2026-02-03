@@ -105,12 +105,10 @@
                     <h1 class="welcome-title">KAHRAMAN</h1>
                     <div class="brand-divider"></div>
                     <div style="color: var(--ana-renk); font-size: 10px; letter-spacing: 4px; font-weight: bold;">TARIM VE HAYVANCILIK</div>
-                    
                     <div class="clock-container">
                         <div class="number n12"><span>12</span></div><div class="number n3"><span>3</span></div><div class="number n6"><span>6</span></div><div class="number n9"><span>9</span></div>
                         <div class="hand hour-hand" id="hourHand"></div><div class="hand min-hand" id="minHand"></div><div class="hand sec-hand" id="secHand"></div>
                     </div>
-
                     <div class="calendar-box">
                         <div id="calMonth" style="text-align:center; font-weight:bold; margin-bottom:10px; font-size:12px; color: #fff;"></div>
                         <div class="days-grid" id="daysGrid">
@@ -150,12 +148,13 @@
 
         <div id="buzagi" class="content-section" style="padding: 20px;">
             <h2 style="color: #fff; text-align: center;">🐄 BUZAĞI DOĞUM TAKİBİ</h2>
-            <div style="background: #111; padding: 15px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px;">
-                <input type="text" id="buzagiAd" placeholder="Buzağı No / Adı" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 8px; box-sizing: border-box;">
+            <div style="background: #111; padding: 20px; border-radius: 15px; border: 1px solid #333; margin: 0 auto 20px auto; max-width: 400px;">
+                <input type="text" id="buzagiAd" placeholder="Buzağı Adı" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 8px; box-sizing: border-box;">
+                <input type="text" id="kupeNo" placeholder="Küpe Numarası" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 8px; box-sizing: border-box;">
                 <input type="date" id="dogumTarih" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 8px; box-sizing: border-box;">
-                <button onclick="buzagiEkle()" style="width: 100%; background: var(--ana-renk); color: #000; font-weight: bold; padding: 14px; border: none; border-radius: 8px;">KAYDET</button>
+                <button onclick="buzagiEkle()" style="width: 100%; background: var(--ana-renk); color: #000; font-weight: bold; padding: 14px; border: none; border-radius: 8px; cursor: pointer;">KAYDET</button>
             </div>
-            <div id="buzagiListe" style="width: 100%;"></div>
+            <div id="buzagiListe" style="width: 100%; max-width: 400px; margin: 0 auto;"></div>
         </div>
 
         <div id="kameralar" class="content-section" style="padding:20px; text-align:center;"><h2>📹 KAMERA SİSTEMİ</h2></div>
@@ -232,7 +231,6 @@
             }
         }
 
-        /* --- BUZAĞI HAFIZA SİSTEMİ --- */
         function buzagiYukle() {
             const hafiza = localStorage.getItem("buzagiKayitlari");
             if (hafiza) { document.getElementById("buzagiListe").innerHTML = hafiza; }
@@ -240,16 +238,30 @@
 
         function buzagiEkle() {
             const ad = document.getElementById("buzagiAd").value;
+            const kupe = document.getElementById("kupeNo").value;
             const tarih = document.getElementById("dogumTarih").value;
-            if(ad == "" || tarih == "") { alert("Boş bırakma gadaşım!"); return; }
+
+            if(ad == "" || kupe == "" || tarih == "") {
+                alert("Gadaşım; Ad, Küpe No ve Tarih kısımlarını boş bırakma!");
+                return;
+            }
+
             const liste = document.getElementById("buzagiListe");
             const yeniKayit = document.createElement("div");
             yeniKayit.style = "background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;";
-            yeniKayit.innerHTML = `<div><b style="color: #fff;">${ad}</b><br><small style="color: #666;">Doğum: ${tarih}</small></div>
-                <button onclick="buzagiSil(this)" style="background: none; border: 1px solid #ff4444; color: #ff4444; padding: 5px 10px; border-radius: 5px; font-size: 10px; cursor: pointer;">SİL</button>`;
+            yeniKayit.innerHTML = `
+                <div>
+                    <b style="color: #fff;">${ad}</b> <span style="color: var(--ana-renk); font-size: 12px;">(${kupe})</span><br>
+                    <small style="color: #666;">Doğum: ${tarih}</small>
+                </div>
+                <button onclick="buzagiSil(this)" style="background: none; border: 1px solid #ff4444; color: #ff4444; padding: 5px 10px; border-radius: 5px; font-size: 10px; cursor: pointer;">SİL</button>
+            `;
             liste.prepend(yeniKayit);
             localStorage.setItem("buzagiKayitlari", liste.innerHTML);
-            document.getElementById("buzagiAd").value = ""; document.getElementById("dogumTarih").value = "";
+
+            document.getElementById("buzagiAd").value = "";
+            document.getElementById("kupeNo").value = "";
+            document.getElementById("dogumTarih").value = "";
         }
 
         function buzagiSil(buton) {
@@ -261,4 +273,3 @@
     </script>
 </body>
 </html>
-
