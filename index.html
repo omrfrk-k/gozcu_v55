@@ -84,6 +84,7 @@
             <div class="menu-list">
                 <div class="sidebar-item" onclick="showSection('welcome', 'ANA SAYFA')" style="color:var(--ana-renk)">🏠 ANA SAYFA</div>
                 <div style="font-size: 9px; color: #444; margin: 10px 0 5px 5px; letter-spacing: 2px;">SİSTEMLER (A-Z)</div>
+                <div class="sidebar-item" onclick="showSection('veteriner', 'VETERİNER TAKİBİ')">💉 VETERİNER TAKİBİ</div>
                 <div class="sidebar-item" onclick="showSection('buzagi', 'İNEK KONTROL LİSTESİ')">🐄 İNEK KONTROL LİSTESİ</div>
                 <div class="sidebar-item" onclick="showSection('hava', 'HAVA DURUMU')">☁️ HAVA DURUMU</div>
                 <div class="sidebar-item" onclick="showSection('kameralar', 'KAMERA SİSTEMİ')">📹 KAMERA SİSTEMİ</div>
@@ -174,6 +175,18 @@
         <div id="kameralar" class="content-section" style="padding:20px; text-align:center;"><h2>📹 KAMERA SİSTEMİ</h2></div>
         <div id="kulucka" class="content-section" style="padding:20px; text-align:center;"><h2>🥚 KULUÇKA MAKİNASI</h2></div>
         <div id="kumes" class="content-section" style="padding:20px; text-align:center;"><h2>🐣 KÜMES VERİLERİ</h2></div>
+        <div id="veteriner" class="content-section" style="padding: 20px;">
+    <h2 style="color: #fff; text-align: center;">💉 VETERİNER & AŞI TAKİBİ</h2>
+    
+    <div style="background: #111; padding: 20px; border-radius: 15px; border: 1px solid #333; margin: 0 auto 20px auto; max-width: 400px;">
+        <input type="text" id="v_hayvanAd" placeholder="Hayvan Adı / No" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 8px; box-sizing: border-box;">
+        <input type="text" id="v_asiAd" placeholder="Aşı veya İlaç Adı" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 8px; box-sizing: border-box;">
+        <input type="date" id="v_tarih" style="width: 100%; margin-bottom: 10px; background: #000; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 8px; box-sizing: border-box;">
+        <button onclick="veterinerEkle()" style="width: 100%; background: #ff4444; color: #fff; font-weight: bold; padding: 14px; border: none; border-radius: 8px; cursor: pointer;">KAYDI EKLE</button>
+    </div>
+
+    <div id="veterinerListe" style="width: 100%; max-width: 400px; margin: 0 auto;"></div>
+</div>
     </div>
 
     <script>
@@ -184,6 +197,7 @@
                 document.getElementById("giris-ekrani").style.display = "none";
                 document.getElementById("ana-sayfa-root").style.display = "block";
                 getHava(); createCalendar(); buzagiYukle(); setInterval(updateClock, 1000);
+                veterinerYukle();
             } else { document.getElementById("hata").style.display = "block"; }
         }
 
@@ -333,7 +347,52 @@ function yasHesapla(dogumTarihi) {
     return sonuc || "Yeni Doğan";
 }
 
-function buzagiEkle() {
+        // Sayfa her açıldığında veteriner kayıtlarını getiren motor
+function veterinerYukle() {
+    const hafiza = localStorage.getItem("veterinerKayitlari");
+    if (hafiza) { document.getElementById("veterinerListe").innerHTML = hafiza; }
+}
+
+function veterinerEkle() {
+    const hayvan = document.getElementById("v_hayvanAd").value;
+    const asi = document.getElementById("v_asiAd").value;
+    const tarih = document.getElementById("v_tarih").value;
+
+    if(hayvan == "" || asi == "" || tarih == "") {
+        alert("Gadaşım eksik bilgi girmeyelim, aşı şakaya gelmez!");
+        return;
+    }
+
+    const liste = document.getElementById("veterinerListe");
+    const yeniKayit = document.createElement("div");
+    yeniKayit.style = "background: #1a1111; padding: 15px; border-radius: 12px; border: 1px solid #442222; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #ff4444;";
+    yeniKayit.innerHTML = `
+        <div style="text-align: left;">
+            <b style="color: #fff;">${hayvan}</b><br>
+            <span style="color: #ff8888; font-size: 13px;">💉 ${asi}</span><br>
+            <small style="color: #666;">Tarih: ${tarih}</small>
+        </div>
+        <button onclick="veterinerSil(this)" style="background: none; border: 1px solid #ff4444; color: #ff4444; padding: 8px; border-radius: 8px; font-size: 10px; cursor: pointer;">SİL</button>
+    `;
+    
+    liste.prepend(yeniKayit);
+    localStorage.setItem("veterinerKayitlari", liste.innerHTML);
+
+    // Formu temizle
+    document.getElementById("v_hayvanAd").value = "";
+    document.getElementById("v_asiAd").value = "";
+    document.getElementById("v_tarih").value = "";
+}
+
+function veterinerSil(buton) {
+    if(confirm("Bu tıbbi kaydı siliyorsun gadaşım, emin misin?")) {
+        buton.parentElement.remove();
+        localStorage.setItem("veterinerKayitlari", document.getElementById("veterinerListe").innerHTML);
+    }
+}
+
+        
+    function buzagiEkle() {
     const ad = document.getElementById("buzagiAd").value;
     const kupe = document.getElementById("kupeNo").value;
     const tarih = document.getElementById("dogumTarih").value;
@@ -378,6 +437,7 @@ function buzagiEkle() {
     </script>
 </body>
 </html>
+
 
 
 
