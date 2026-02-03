@@ -265,43 +265,68 @@
     return sonuc || "Yeni Doğan";
 }
 
+// Yaşı gününe kadar hesaplayan motor
+function yasHesapla(dogumTarihi) {
+    const dogum = new Date(dogumTarihi);
+    const bugun = new Date();
+    
+    let yil = bugun.getFullYear() - dogum.getFullYear();
+    let ay = bugun.getMonth() - dogum.getMonth();
+    let gun = bugun.getDate() - dogum.getDate();
+
+    if (gun < 0) {
+        ay--;
+        gun += new Date(bugun.getFullYear(), bugun.getMonth(), 0).getDate();
+    }
+    if (ay < 0) {
+        yil--;
+        ay += 12;
+    }
+
+    let sonuc = "";
+    if (yil > 0) sonuc += yil + " Yıl ";
+    if (ay > 0) sonuc += ay + " Ay ";
+    if (gun > 0) sonuc += gun + " Gün";
+    
+    return sonuc || "Yeni Doğan";
+}
+
 function buzagiEkle() {
     const ad = document.getElementById("buzagiAd").value;
     const kupe = document.getElementById("kupeNo").value;
     const tarih = document.getElementById("dogumTarih").value;
-    const cins = document.getElementById("cinsiyet").value;
+    const cins = document.getElementById("cinsiyet").value; // Yeni eklediğin cinsiyet kutusu
 
     if(ad == "" || kupe == "" || tarih == "") {
-        alert("Gadaşım tüm bilgileri eksiksiz gir!");
+        alert("Gadaşım tüm bilgileri eksiksiz gir ki baban karıştırmasın!");
         return;
     }
 
     const yas = yasHesapla(tarih);
     const ikon = (cins === "Dişi") ? "♀️" : "♂️";
-    const renk = (cins === "Dişi") ? "#ff69b4" : "#1e90ff"; // Dişi pembe, Erkek mavi tonu
+    const renk = (cins === "Dişi") ? "#ff69b4" : "#1e90ff"; // Dişi pembe, Erkek mavi
 
     const liste = document.getElementById("buzagiListe");
     const yeniKayit = document.createElement("div");
-    yeniKayit.style = "background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;";
+    yeniKayit.style = "background: #1a1a1a; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid " + renk;
     yeniKayit.innerHTML = `
         <div style="text-align: left;">
             <b style="color: #fff;">${ad}</b> <span style="color: ${renk}; font-weight:bold;">${ikon}</span> 
             <span style="color: var(--ana-renk); font-size: 11px;">[${kupe}]</span><br>
-            <small style="color: #aaa;">Yaş: ${yas}</small><br>
+            <small style="color: #aaa;"><b>Yaş:</b> ${yas}</small><br>
             <small style="color: #555; font-size: 10px;">D.Tarihi: ${tarih}</small>
         </div>
-        <button onclick="buzagiSil(this)" style="background: none; border: 1px solid #ff4444; color: #ff4444; padding: 8px; border-radius: 8px; font-size: 10px; cursor: pointer;">SİL</button>
+        <button onclick="buzagiSil(this)" style="background: none; border: 1px solid #ff4444; color: #ff4444; padding: 8px 12px; border-radius: 8px; font-size: 10px; cursor: pointer;">SİL</button>
     `;
     
     liste.prepend(yeniKayit);
     localStorage.setItem("buzagiKayitlari", liste.innerHTML);
 
-    // Form temizliği
+    // Formu temizle
     document.getElementById("buzagiAd").value = "";
     document.getElementById("kupeNo").value = "";
     document.getElementById("dogumTarih").value = "";
 }
-
         function buzagiSil(buton) {
             if(confirm("Kaydı siliyorsun gadaşım, emin misin?")) {
                 buton.parentElement.remove();
@@ -311,4 +336,5 @@ function buzagiEkle() {
     </script>
 </body>
 </html>
+
 
